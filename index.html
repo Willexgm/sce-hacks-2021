@@ -8,6 +8,17 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+        <style>
+            #map {
+              position: relative; top: 0; bottom: 0; left: 0; right: 0;
+              height: 540px;
+              width: 1080px;
+            }
+        </style>
+
     <title>MbrNet</title>
 
   </head>
@@ -38,7 +49,34 @@
     <div class="container">
       <h1>Where our map Goes</h1>
     </div>
+    
+    <br>
 
+    <div id="map" class = "container">
+      <script>
+          var map = L.map('map').setView([37.7783, -119.4179],6);
+
+          L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=I7FDd4K34FnE1yjyyXQo', {
+              attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+          }).addTo(map);
+
+          var marker = L.marker([37.3352, -121.8811]).addTo(map);
+          marker.bindPopup("<b>San Jose State University</b><br>Temp: ... <br>CO2 Level: ...");
+      </script>            
+    </div>
+
+    <br>
+    <br>
+
+    <div class="container">
+      <h1>About Us</h1>
+    </div>
+    <div class="container">
+      <p>
+        This is my first time doing HTML and it is quite cancer.
+      </p>
+    </div>
+    
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
