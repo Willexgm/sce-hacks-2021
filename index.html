@@ -18,6 +18,20 @@
       }
     </style>
 
+     <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-app.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-database.js"></script>
+     <script> // Your web app's Firebase configuration
+     const firebaseConfig = {
+         apiKey: "AIzaSyAUvpTKzl5KJs4icdyIQPFEEmcvbUqz2Fo",
+         authDomain: "sce-hacks-2021.firebaseapp.com",
+         databaseURL: "https://sce-hacks-2021-default-rtdb.firebaseio.com",
+         projectId: "sce-hacks-2021",
+         storageBucket: "sce-hacks-2021.appspot.com",
+         messagingSenderId: "662054129604",
+         appId: "1:662054129604:web:85f8597c6ba4f3e8249e91"
+     };
+     firebase.initializeApp(firebaseConfig); </script>
+
     <title>MbrNet</title>
 
   </head>
@@ -52,58 +66,32 @@
     <br>
 
     <div id="map" class="container">
-      <script type="module">
+      <script>
         var map = L.map('map').setView([37.7783, -119.4179],6);
 
         L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=I7FDd4K34FnE1yjyyXQo', {
             attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
         }).addTo(map);
 
-        var marker = L.marker([37.3352, -121.8811]).addTo(map);
-        marker.bindPopup("<b>San Jose State University</b><br>Temp: ... <br>CO2 Level: ...");
-
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-                
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-          apiKey: "AIzaSyAUvpTKzl5KJs4icdyIQPFEEmcvbUqz2Fo",
-          authDomain: "sce-hacks-2021.firebaseapp.com",
-          databaseURL: "https://sce-hacks-2021-default-rtdb.firebaseio.com",
-          projectId: "sce-hacks-2021",
-          storageBucket: "sce-hacks-2021.appspot.com",
-          messagingSenderId: "662054129604",
-          appId: "1:662054129604:web:85f8597c6ba4f3e8249e91"
-        };
-                
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-
-        const database = getDatabase(app);
-        const locations = ref(database, 'ids');
-        onValue(locations, (snapshot) => {
-          const loc = snapshot.val();
-          console.log(loc)
-          for (var x in loc)
+        const database = firebase.database();
+        const ref = database.ref();
+        ref.on('value', snapshot => { 
+          const info = snapshot.val(); 
+          for( x in info.ids)
           {
-            var latitude = loc[x].lat;
-            var longitude = loc[x].lon;
+            var latitude = info.ids[x].lat;
+            var longitude = info.ids[x].lon;
+
             var marker = L.marker([longitude, latitude]).addTo(map);
 
-            const information = ref(database, 'data');
-            onValue(information, (snapshot) => {
-              const info = snapshot.val();
-              var txt = info[x].g + "<br>"+info[x].t;
-              marker.bindPopup(txt);
-            });
+            var txt = info.data[x].g + "<br>"+info.data[x].t;
+            marker.bindPopup(txt);
           }
         });
 
       </script>
     </div>
-
+    
     <br>
     <br>
 
