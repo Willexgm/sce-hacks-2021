@@ -84,7 +84,7 @@
 
             var marker = L.marker([longitude, latitude]).addTo(map);
 
-            var txt = info.data[x].g + "<br>"+info.data[x].t;
+            var txt = "C02 Level: " + info.data[x].g + "<br>Temp: "+info.data[x].t + "<br>Latitude: " + latitude +"<br>Longitude: " +longitude;
             marker.bindPopup(txt);
           }
         });
